@@ -9,6 +9,7 @@ using API.DB;
 using API.Models;
 using Microsoft.AspNetCore.Cors;
 using API.DB.Repositories;
+using API.ViewModels;
 
 namespace API.Controllers
 {
@@ -26,10 +27,17 @@ namespace API.Controllers
 
         // GET: api/Certificates
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Certificate>>> GetCertificates()
+        public async Task<ActionResult<IEnumerable<CertVM>>> GetCertificates()
         {
-
-            return await _repo.GetAsync();
+            var list = await _repo.GetAsync(null, "Customer", null);
+            return list.Select(a => new CertVM()
+            {
+                Id = a.Id,
+                AcademicYear = a.AcademicYear,
+                CustomerId = a.CustomerId,
+                CustomerName = a.Customer.Name,
+                SchoolName = a.SchoolName
+            }).ToList();
         }
 
         // GET: api/Certificates/5
