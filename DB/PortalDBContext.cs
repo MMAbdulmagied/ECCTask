@@ -22,7 +22,7 @@ namespace API.DB
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["RMSConnectionString"].ToString());
+                optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["PortalCon"].ToString());
                 optionsBuilder.EnableSensitiveDataLogging(true);
             }
         }
