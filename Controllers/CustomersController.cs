@@ -9,6 +9,7 @@ using API.DB;
 using API.Models;
 using Microsoft.AspNetCore.Cors;
 using API.DB.Repositories;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Controllers
 {
@@ -67,8 +68,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer Customer)
         {
-
-            await _repo.InsertAsync(Customer);
+            var old = await _repo.GetAsync(x => x.Mobile == Customer.Mobile);
+            if (old.Any())
+            {
+                ModelState.AddModelError("Mobile", "this number already exist");
+                return BadRequest(ModelState);
+            }
+            else
+                await _repo.InsertAsync(Customer);
 
             return CreatedAtAction("GetCustomer", new { id = Customer.Id }, Customer);
         }
