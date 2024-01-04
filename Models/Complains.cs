@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models
 {
@@ -6,16 +7,12 @@ namespace API.Models
     {
         public int Id { get; set; }
         [StringLength(500)]
-        public string TitleAr { get; set; }
+        public string Title { get; set; }
         [StringLength(500)]
-        public string TitleEn { get; set; }
-        [StringLength(500)]
-        public string DescriptionAr { get; set; }
-        [StringLength(500)]
-        public string DescriptionEn { get; set; }
+        public string Description { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
-        public bool IsCompleted { get; set; }
+        public Customer? Customer { get; set; }
+        public bool IsCompleted { get; set; } = false;
         public DateTime? Createddate { get; set; }
     }
 }

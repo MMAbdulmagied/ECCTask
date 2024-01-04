@@ -9,6 +9,7 @@ using API.DB;
 using API.Models;
 using Microsoft.AspNetCore.Cors;
 using API.DB.Repositories;
+using API.ViewModels;
 
 namespace API.Controllers
 {
@@ -26,10 +27,19 @@ namespace API.Controllers
 
         // GET: api/Complains
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Complain>>> GetComplains()
+        public async Task<ActionResult<IEnumerable<ComplainVM>>> GetComplains()
         {
-
-            return await _repo.GetAsync();
+            var list = await _repo.GetAsync(null, "Customer", null);
+            return list.Select(a => new ComplainVM()
+            {
+                Id = a.Id,
+                CustomerId = a.CustomerId,
+                CustomerName = a.Customer.Name,
+                Createddate = a.Createddate,
+                Description = a.Description,
+                IsCompleted = a.IsCompleted,
+                Title   =a.Title
+            }).ToList();
         }
 
         // GET: api/Complains/5
@@ -67,7 +77,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Complain>> PostComplain(Complain Complain)
         {
-
+            Complain.Createddate = DateTime.Now;
             await _repo.InsertAsync(Complain);
 
             return CreatedAtAction("GetComplain", new { id = Complain.Id }, Complain);

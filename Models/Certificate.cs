@@ -10,6 +10,6 @@ namespace API.Models
         [StringLength(500)]
         public string SchoolName { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
     }
 }
