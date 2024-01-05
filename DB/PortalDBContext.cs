@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.DB
 {
-    public class PortalDBContext: DbContext
+    public class PortalDBContext : DbContext
     {
         public PortalDBContext()
         {
@@ -25,6 +25,18 @@ namespace API.DB
                 optionsBuilder.UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["PortalCon"].ToString());
                 optionsBuilder.EnableSensitiveDataLogging(true);
             }
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>().HasData(
+                new Customer
+                {
+                    Id = -1,
+                    Email = "customer@c.com",
+                    Mobile = "0511111111",
+                    Name = "Default Customer"
+                }
+            );
         }
     }
 }

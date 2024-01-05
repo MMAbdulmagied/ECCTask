@@ -30,7 +30,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
 
-            return await _repo.GetAsync();
+            return await _repo.GetAsync(x => x.Id > 0);
         }
 
         // GET: api/Customers/5
