@@ -7,8 +7,10 @@ namespace API.Models
     {
         public int Id { get; set; }
         [StringLength(500)]
+        [Required]
         public string Title { get; set; }
         [StringLength(500)]
+        [Required]
         public string Description { get; set; }
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
